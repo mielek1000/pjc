@@ -1,0 +1,66 @@
+/*
+Opracować program wczytujący ze standardowego wejścia znaki i zapisujący do pliku wiersze, jeśli ich
+długość   będzie   z   zakresu   długości   podanej   w   trakcie   uruchomienia   programu.   Można   założyć,   że
+wprowadzane dane będą poprawne. Przykładowo uruchomienie programu: 
+$ prog 10-20 plik_wy.txt
+spowoduje   zapisanie   w   plik_wy.txt   wierszy  o   długości   co   najmniej   10   znaków   i   nie   dłuższe   niż   20
+znaków.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main (int argc, char *argv[]) {
+FILE *pFile=fopen(argv[2],"w");
+char tWejscie[255];
+char smiec;
+char koniec='n';
+char *pTmp;
+char tPomin[]="-";
+int j=1;
+int zakresMin;
+int zakresMax;	
+/* Dodane na potrzeby nowego zadania*/	
+	pTmp=strtok(argv[1],tPomin);
+		while(NULL!=pTmp)
+		{
+			if(j==1)
+			{
+				zakresMin=atoi(pTmp);
+			}
+			if(j==2)
+			{
+				zakresMax=atoi(pTmp);
+			}
+			j++;
+			pTmp=strtok(NULL,tPomin);
+		}
+/*Petla dla programu*/
+while(1)
+	{
+		puts("Wprowadz dane do sprawdzenia czy nadaja sie do zapisania do pliku:");
+		scanf("%[^\n]",tWejscie);
+		scanf("%c",&smiec);
+			if(strlen(tWejscie)>=zakresMin && strlen(tWejscie)<=zakresMax) //zmieniony warunek
+				{
+					
+					fprintf(pFile,"%s\n",tWejscie);
+					printf("Zapisano do pliku: %s\n\n",tWejscie);
+				}
+			else printf("Nie spełniono warunkow do zapisania do pliku!\n");
+		puts("Czy przerwac wprowadzanie danych? T/N");
+		scanf("%c",&koniec);
+		scanf("%c",&smiec);
+			if(koniec=='T'||koniec=='t')
+				{
+					fclose(pFile);
+					break;
+				}
+		
+	}
+
+		
+    return 0;
+
+}
