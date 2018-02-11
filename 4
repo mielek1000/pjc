@@ -1,0 +1,60 @@
+/*Opracować   program   wczytujący   z   wiersza   poleceń   nazwę   pliku   i   parami   liczby   oddzielone   spacją
+i
+wyświetlający   na   ekranie   wiersze   z   tego   pliku   o   podanych   numerach,   jeśli   liczba   znaków   w   tym
+wierszu   jest   równa   drugiej   liczbie   pary..   Można   założyć,   że   wszystkie   wprowadzane   dane   będą
+poprawne. Przykładowo dla wiersza poleceń: $prog plik_we.txt 1 2 2 5 3 10 5 1  
+oraz zawartości pliku
+plik_we.txt postaci:
+aa
+bb
+cccdddeeef
+dd
+e
+faaf
+program powinien wyświetlić:
+aa
+cccdddeeef
+e
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main (int argc, char *argv[]) {
+FILE *plik = fopen(argv[1],"r");
+int tWejsciowe[255];
+char tLinia[255];
+int ileCyfr=argc-2;
+int i,j;
+int numerLinii=1;
+int dlugoscLinii;
+	/*uzupełniamy tablice danymi wejsciowymi dla numeru wiersza i długosci linii*/
+	for(i=0;i<(ileCyfr);i++)
+		{
+			tWejsciowe[i]=atoi(argv[2+i]);
+						
+		}
+		
+	while(fgets(tLinia,sizeof(tLinia),plik))
+		{	
+			
+			for(i=0;i<ileCyfr;i++)
+				{
+					if(numerLinii==tWejsciowe[i] && tWejsciowe[i+1]==strlen(tLinia)-1)
+					
+						{
+							
+							printf("%s",tLinia);
+							
+						}
+				i++;
+				}
+			numerLinii++;
+			
+			
+		}
+	
+    fclose(plik);
+    return 0;
+}
