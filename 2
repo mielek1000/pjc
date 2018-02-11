@@ -1,0 +1,26 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, char *argv[])
+{
+
+    char wejscie[255];
+    char delimiter[] = " ,.;\n"; // dodane \n do znakow rozdzielajacych wyrazy
+    char *tmp;
+    char *szukaj = argv[1];
+
+    printf("Wpisz lub wklej ciagi znakow (maksymalnie 255), zakoncz wpisujac 0 w ostatniej linijce:\n");
+    scanf("%[^0]", wejscie);
+
+    tmp = strtok(wejscie, delimiter);
+    while (tmp != NULL) {
+
+        if(strstr(tmp, szukaj) != NULL) {
+            printf("%s ", tmp);
+        }
+        tmp = strtok(NULL,delimiter);
+
+    }
+
+    return 0;
+}
