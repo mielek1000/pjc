@@ -1,0 +1,72 @@
+/*
+ Opracować program wczytujący z pliku wiersze i wyświetlający te, które zawierają zadaną liczbę grup
+liter danego typu. Można założyć,  że wszystkie wprowadzane dane będą poprawne. Przykładowo dla
+zadanej grupy liter 
+abc
+ i liczby wynoszącej 
+3
+ oraz znaków w pliku:
+abcababcabca
+shshsk
+wwwl llsd djj
+abcb ca  dabcbaa  jss abc
+klja hhkla  hahh ;a; habchhs  www hajhhj
+program powinien wyświetlić:
+abcababcabca
+abcb ca  dabcbaa  jss abc
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+int main (void) {
+FILE *pFile=fopen("file","r");
+char tLitery[255];
+char smiec;
+int liczba;
+char tLinia[255];
+int znalezione;
+int dlugoscLinii;
+int i,j;
+int iloscLiter;
+
+puts("Wprowadz ciag do wyszukania");
+scanf("%[^\n]",tLitery);
+scanf("%c",&smiec);
+puts("Wprowadz ile razy ciag ma sie pojawic w slowie");
+scanf("%d",&liczba);
+puts("Znaleziono w pliku:");
+/*ustalamy dlugosc wyszukiwanego ciagu*/
+iloscLiter=strlen(tLitery);
+
+while(fgets(tLinia,sizeof(tLinia),pFile)) 
+	{	znalezione=0;
+		dlugoscLinii=strlen(tLinia);
+		for(i=0;i<dlugoscLinii;i++)
+		{
+			if(tLinia[i]==tLitery[0]) //jezeli znak w linii jest zgodny z pierwszym poszukiwanym znakiem
+			{
+				for(j=0;j<iloscLiter && j<dlugoscLinii;++j) //to sprawdzamy czy kolejne tez sa OK
+				{		
+					if(tLitery[j]!=tLinia[i+j])
+					{
+					break; //jezeli nie przerywamy petle
+					}
+				}
+
+			if (j == iloscLiter) //jezeli petla zakonczyla sie sama to podbijamy licznik dla znalezionych
+			{
+				znalezione++;
+			}
+			}
+				
+		}
+		if(znalezione==liczba) //jezeli licznik jest rowny podanej wartosci to drukujemy linie
+			printf("%s",tLinia);
+	}
+
+fclose(pFile);
+    return 0;
+}
