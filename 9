@@ -1,0 +1,47 @@
+/*
+ Opracować program wczytujący z pliku tekstowego wiersze i zapisujący do drugiego pliku te wiersze,
+które   zawierają   tylko   cyfry   a   ich   długość   nie   jest   większa   niż   wartość   podana   jako   argument
+uruchomienia programu.  Można założyć,  że wszystkie dane będą poprawne,  a podawana długość nie
+będzie większa niż 128.
+*/
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+int main (int argc, char *argv[]) {
+FILE *pFileIn=fopen("filein","r");
+FILE *pFileOut=fopen("fileOut","w");
+char tLine[128];
+int argLineLen=atoi(argv[1]);
+int lineLen;
+int i;
+int lineDigits;
+puts("Zapisano do pliku:");
+	while(fgets(tLine,sizeof(tLine),pFileIn))
+	{	lineDigits=0;
+		lineLen=strlen(tLine)-1;
+			for(i=0;i<lineLen;i++)
+			{
+				if(isdigit(tLine[i]))
+				{
+					lineDigits++;
+				}
+			}
+			
+		if(lineDigits==lineLen)
+			{
+				if(lineLen<=argLineLen)
+				{
+					printf("%s",tLine);
+					fprintf(pFileOut,"%s",tLine);
+				}
+			}
+	}
+
+fclose(pFileIn);   
+fclose(pFileOut);
+    return 0;
+
+}
