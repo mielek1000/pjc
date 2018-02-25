@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+int main (int argc, char *argv[]) {
+
+    FILE *plik = NULL;
+    char linia[256];
+    int wiersze[100];
+    int ilewierszy = 0;
+    int ktorywiersz = 0;
+    int j=0; // pomocnicze
+    int i=0;
+
+	if(3 > argc) {
+		printf("Niewlasciwa ilosc argumentow. Otrzymalem: %d\n",argc-1);
+		return 1;
+	}
+
+    /* Jesli od argc odejmiemy 2 (czyli nazwa programu i nazwa pliku)
+    dostaniemy ilosc wprowadzonych przez uzytkownika liczb */
+    ilewierszy = argc-2;
+
+    /* przy pomocy funkcji atoi konwertujemy string zawierajacy poszczegolne liczby do fortmatu int. */
+    for(i=0;i<ilewierszy;i++) {
+        /* Mamy offset =2 zeby pominac nazwe programu i pliku */
+        wiersze[i]=atoi(argv[2+i])-1;
+    }
+    // argv[0] to nazwa programu, argv[1] to nazwa pliku, reszta to numery wierszy
+    plik = fopen(argv[1], "r");
+
+    // przelatuje po wszystkich liniach z pliku
+    while (fgets(linia, sizeof(linia), plik)) {
+        // jesli biezacy indeks wiersza == biezacy indeks wybranych wierszy, wyswietlam
+        if (ktorywiersz==wiersze[j]) {
+            printf("%s", linia);
+            j++;
+        }
+        ktorywiersz++;
+    }
+    fclose(plik);
+    return 0;
+}
