@@ -1,0 +1,48 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main (int argc, char *argv[]) {
+
+    FILE *plik_we = NULL;
+    FILE *plik_wy = NULL;
+    char linia[100];
+    int dlugosclinii=0;
+    int j=0; // pomocnicze
+    int i=0;
+    int wyswietl;
+
+    plik_we = fopen(argv[2], "r");
+    plik_wy = fopen(argv[3], "w");
+
+    // przelatuje po wszystkich liniach z pliku
+    while (fgets(linia, sizeof(linia), plik_we)) {
+		
+		// zerowanie zmiennej wyswietl
+		wyswietl=0;
+
+        // dlugosc biezacej linii
+        dlugosclinii = strlen(linia);
+
+        // petla po liczbach z argumentu argv[1]
+        for (i=0;i<strlen(argv[1]);i++) {
+            // petla po lancuchu znakow z linii
+            for (j=0;j<dlugosclinii;j++) {
+                // jesli jakis znak taki sam jak poszukiwany, przerywam
+                if (linia[j]==argv[1][i]) {
+                    wyswietl = 1;
+                    break;
+                }
+            }
+            if (wyswietl==1) break;
+        }
+        if (wyswietl==1) {
+            fprintf(plik_wy, "%s", linia);
+        }
+
+    }
+    fclose(plik_we);
+    fclose(plik_wy);
+    return 0;
+
+}
