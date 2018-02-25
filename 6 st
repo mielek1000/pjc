@@ -1,0 +1,30 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main (int argc, char *argv[]) {
+
+    FILE *plik_wy = NULL;
+    char wiersz[100];
+    int limit=0;
+    int koniec=0;
+
+    plik_wy = fopen(argv[2], "w");
+    limit = atoi(argv[1]);
+
+    printf("Pisz wierszem, zakoncz jedynka (1)... :)\n");
+    while (koniec==0) {
+        scanf("%s", wiersz);
+        if (atoi(wiersz)==1) {
+            break;
+        } else {
+            if (strlen(wiersz)>=limit) {
+                printf("Zapisalem wiersz do pliku");
+                fprintf(plik_wy, "%s\n", wiersz);
+            }
+        }
+    }
+    fclose(plik_wy);
+    return 0;
+
+}
