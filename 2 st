@@ -1,0 +1,35 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+int main (void) {
+
+    FILE *plik = NULL;
+    char linia[256];
+    int ileliter = 4;
+    char jakalitera = 'd';
+    int dlugosclinii = 0;
+    int i=0;
+    int licznik=0;
+
+    plik = fopen("plik.txt", "r");
+
+    // przelatuje po wszystkich liniach z pliku
+    while (fgets(linia, sizeof(linia), plik)) {
+
+        // dlugosc biezacej linii
+        dlugosclinii = strlen(linia);
+        // zliczam wystapienia liter
+        for (i=0;i<dlugosclinii;i++) {
+            if (linia[i]==jakalitera) {
+                licznik++;
+            }
+        }
+        if (licznik>=ileliter) {
+            printf("%s", linia);
+        }
+        licznik = 0;
+    }
+    fclose(plik);
+    return 0;
+}
