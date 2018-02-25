@@ -1,0 +1,25 @@
+#include <stdio.h>
+#include <string.h>
+
+int main (void) {
+
+    // deklaracje potrzebnych zmiennych
+    char wejscie[255]; // wesjcie
+    char szukaj[] = "abb"; // szukany lancuch
+    char pomin[] = " ,.-"; // ignorowane przez strtok znaki
+    char *tmp; // zmienna tymczasowa (linijka tekstu)
+
+    printf("Wprowadz lancuch znakow, max 255\n");
+    scanf("%[^\n]", wejscie);
+
+    // pobranie do tmp wejscia i rozdzielenie na spacje
+    tmp = strtok( wejscie, pomin );
+    while( tmp != NULL ) {
+        if(strstr(tmp, szukaj) != NULL) {
+            printf("%s\n", tmp);
+        }
+        tmp = strtok( NULL, pomin );
+    }
+    return 0;
+
+}
