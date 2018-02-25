@@ -1,0 +1,42 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+int main (void) {
+
+     // deklaracje potrzebnych zmiennych
+    char wejscie[255]; // wejscie
+    char pomin[] = " ,.-"; // ignorowane przez strtok znaki
+    char *tmp; // zmienna tymczasowa (linijka tekstu)
+    int dlugosclinii=0; // do zliczania liter
+    int i=0;
+    int licznik = 0;
+
+    printf("Wprowadz lancuch znakow, max 255\n");
+    scanf("%[^\n]", wejscie);
+
+    // pobranie do tmp wejscia i rozdzielenie na spacje
+    tmp = strtok( wejscie, pomin );
+    while( tmp != NULL ) {
+
+        // dlugosc biezacej linii
+        dlugosclinii = strlen(tmp);
+        // zliczam wystapienia liter
+        for (i=0;i<dlugosclinii;i++) {
+            if (isdigit(tmp[i])) {
+                // w tym wyrazie jest cyfra
+                licznik++;
+                break; // przerywam, bo wykrylem jedna cyfre i wystarczy
+            }
+        }
+        // jesli w wyrazie nie ma cyfr, wyswietlam linie
+        if (licznik==0) {
+            printf("%s\n", tmp);
+        }
+        licznik = 0;
+
+        tmp = strtok( NULL, pomin );
+    }
+    return 0;
+}
